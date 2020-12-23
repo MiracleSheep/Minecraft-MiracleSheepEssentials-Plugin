@@ -1,0 +1,12 @@
+name: MiracleSheepEssentials
+version: 1.0
+author: MiracleSheep
+main: com.MiracleSheep.MiracleSheepEssentials.MiracleSheepEssentials
+api-version: 1.14
+depend:
+commands:
+  rules:
+    description: Lists the rules of the server
+    usage: /<command>
+    aliases: [law]
+
