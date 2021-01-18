@@ -15,14 +15,20 @@ import java.util.List;
 
 public class MiracleSheepEssentials extends JavaPlugin {
 
+
+    public MiracleSheepEssentials main;
+
     @Override
     public void onEnable() {
-        getServer().getPluginManager().registerEvents(new MiracleSheepEssentialsEvents(),this);
+        getServer().getPluginManager().registerEvents(new MiracleSheepEssentialsEvents(this),this);
         MiracleSheepEssentialsCommands commands = new MiracleSheepEssentialsCommands(this);
+        saveDefaultConfig();
         ItemManager.init();
        getCommand("rules").setExecutor(commands);
+       getCommand("boom").setExecutor(commands);
         getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "[MiracleSheepEssentials] plugin is enabled.");
     }
+
 
     @Override
     public void onDisable() {

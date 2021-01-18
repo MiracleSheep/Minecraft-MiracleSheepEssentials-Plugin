@@ -9,4 +9,8 @@ commands:
     description: Lists the rules of the server
     usage: /<command>
     aliases: [law]
+  boom:
+    description:  Summons a boomrod
+    usage: /<command>
+    aliases: [boomrod]
 

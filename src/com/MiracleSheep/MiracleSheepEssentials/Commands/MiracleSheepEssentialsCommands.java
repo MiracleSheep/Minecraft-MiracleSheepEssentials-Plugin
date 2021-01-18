@@ -30,19 +30,43 @@ public class MiracleSheepEssentialsCommands implements CommandExecutor {
         Player player = (Player) sender;
 
         if (cmd.getName().equalsIgnoreCase("rules")) {
+
+            if (main.getConfig().getBoolean("Do_Rules_Command") == false) {
+                player.sendMessage(ChatColor.DARK_RED + "This command has been disabled");
+                return true;
+            }
+
             if (!sender.hasPermission("rules.all")) {
                 player.sendMessage(ChatColor.DARK_RED + "You do not have permission to perform this command");
                 return true;
             }
 
             player.sendMessage(ChatColor.GREEN + "Here are the rules:");
-            player.sendMessage(ChatColor.GOLD + "Be a good child.");
-            player.sendMessage(ChatColor.GOLD + "Don't grief people's stuff, but killing is allowed.");
-            player.sendMessage(ChatColor.GOLD + "Don't steal people's services and items, you must buy them or trade them");
-            player.sendMessage(ChatColor.GOLD + "No Hacking");
-            player.sendMessage(ChatColor.GOLD + "No Exploiting bugs(duping, ect)");
-            player.sendMessage(ChatColor.GOLD + "Must refer to server owner as the coolest and awesomest person");
-            player.sendMessage(ChatColor.GOLD + "That's it! Have fun!");
+            String[] rules = main.getConfig().getStringList("Rules").toArray(new String[0]);
+            for (int i = 0 ; i < rules.length ; i ++) {
+                player.sendMessage(ChatColor.GOLD + rules[i]);
+            }
+
+
+
+        }
+
+        if (cmd.getName().equalsIgnoreCase("boom")) {
+
+            if (main.getConfig().getBoolean("Do_Boom_Rod") == false) {
+                player.sendMessage(ChatColor.DARK_RED + "This command has been disabled");
+                return true;
+            }
+
+            if (!sender.hasPermission("boom.all")) {
+                player.sendMessage(ChatColor.DARK_RED + "You do not have permission to perform this command");
+                return true;
+            }
+
+            player.getInventory().addItem(ItemManager.BoomWand);
+
+
+
         }
 
 

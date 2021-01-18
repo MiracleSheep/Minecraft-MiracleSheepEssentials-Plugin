@@ -1,0 +1,28 @@
+
+# Controls whether or not the boom rod command is enabled
+Do_Boom_Rod: true
+
+# Controls whether or not the player gets a hospital bill upon death
+Do_Hospital_Bills: true
+
+# Key that decides whether or not to do the rules command
+Do_Rules_Command: true
+
+# These are the messages that print upon typing /rules
+Rules:
+  - Be a good child.
+  - Don't grief people's stuff, but killing is allowed.
+  - Don't steal people's services and items, you must buy them or trade them
+  - No Hacking
+  - No Exploiting bugs(duping, ect)
+  - Must refer to server owner as the coolest and awesomest person
+  - That's it! Have fun!
+
+# This controls whether or not the server should have a join message
+Do_Server_Join_Message: true
+
+# This controls whether or not you want the plugin to be announced upon joining
+Do_Plugin_Announce_Message: true
+
+# This is the message that will be displayed upon a player joining the game
+Server_Join_Message: Welcome to MiracleSheep's server!
