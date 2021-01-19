@@ -2,9 +2,11 @@ package com.MiracleSheep.MiracleSheepEssentials;
 import com.MiracleSheep.MiracleSheepEssentials.Commands.MiracleSheepEssentialsCommands;
 import com.MiracleSheep.MiracleSheepEssentials.Events.MiracleSheepEssentialsEvents;
 import com.MiracleSheep.MiracleSheepEssentials.Items.ItemManager;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -22,10 +24,13 @@ public class MiracleSheepEssentials extends JavaPlugin {
     public void onEnable() {
         getServer().getPluginManager().registerEvents(new MiracleSheepEssentialsEvents(this),this);
         MiracleSheepEssentialsCommands commands = new MiracleSheepEssentialsCommands(this);
+        ItemManager i = new ItemManager(this);
         saveDefaultConfig();
         ItemManager.init();
        getCommand("rules").setExecutor(commands);
        getCommand("boom").setExecutor(commands);
+        getCommand("invsave").setExecutor(commands);
+        getCommand("invload").setExecutor(commands);
         getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "[MiracleSheepEssentials] plugin is enabled.");
     }
 
@@ -36,8 +41,12 @@ public class MiracleSheepEssentials extends JavaPlugin {
     }
 
 
-    public void saveInventory(Player player) {
-        File f = new File(this.getDataFolder().getAbsolutePath(), player.getName() + ".yml");
+
+
+    public void saveInventory(Player player, String name) {
+
+
+        File f = new File(this.getDataFolder().getAbsolutePath(), name + player.getName() + ".yml");
         FileConfiguration c = YamlConfiguration.loadConfiguration(f);
         c.set("inventory.armor", player.getInventory().getArmorContents());
         c.set("inventory.content", player.getInventory().getContents());
@@ -48,8 +57,9 @@ public class MiracleSheepEssentials extends JavaPlugin {
         }
     }
 
-    public void restoreInventory(Player player) {
-        File f = new File(this.getDataFolder().getAbsolutePath(), player.getName() + ".yml");
+    public void loadInventory(Player player, String name) {
+
+        File f = new File(this.getDataFolder().getAbsolutePath(), name + player.getName() + ".yml");
         FileConfiguration c = YamlConfiguration.loadConfiguration(f);
         ItemStack[] content = ((List<ItemStack>) c.get("inventory.armor")).toArray(new ItemStack[0]);
         player.getInventory().setArmorContents(content);

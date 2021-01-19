@@ -13,4 +13,11 @@ commands:
     description:  Summons a boomrod
     usage: /<command>
     aliases: [boomrod]
+  invsave:
+    description: Saves your inventory
+    usage: /<command>
+  invload:
+    description: Loads an inventory
+    usage: /<command>
+
 

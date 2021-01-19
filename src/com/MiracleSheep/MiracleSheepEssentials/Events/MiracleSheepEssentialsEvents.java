@@ -38,7 +38,7 @@ public class MiracleSheepEssentialsEvents implements Listener {
         Player player = e.getPlayer();
 
         if (main.getConfig().getBoolean("Do_Hospital_Bills") == true) {
-            player.sendMessage(ChatColor.AQUA + "You are now a dummydum. Shame on you.");
+            player.sendMessage(ChatColor.AQUA + main.getConfig().getString("Hospital_Death_Message"));
             player.getInventory().addItem(ItemManager.Bill);
         }
 

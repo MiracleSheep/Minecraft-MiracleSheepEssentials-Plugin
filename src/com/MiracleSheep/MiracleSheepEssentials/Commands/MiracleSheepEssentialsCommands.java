@@ -3,13 +3,15 @@ package com.MiracleSheep.MiracleSheepEssentials.Commands;
 
 import com.MiracleSheep.MiracleSheepEssentials.Items.ItemManager;
 import com.MiracleSheep.MiracleSheepEssentials.MiracleSheepEssentials;
+import me.zombie_striker.psudocommands.CommandUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
-import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.block.CommandBlock;
+import org.bukkit.command.*;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
+import java.util.UUID;
 
 
 public class MiracleSheepEssentialsCommands implements CommandExecutor {
@@ -23,13 +25,15 @@ public class MiracleSheepEssentialsCommands implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        if (!(sender instanceof Player)) {
-            sender.sendMessage("Only Players can use that command");
+        if (!(sender instanceof Player) && !(sender instanceof BlockCommandSender)) {
+            sender.sendMessage("Only Players And CommandBlocks can use that command");
             return true;
         }
-        Player player = (Player) sender;
+        CommandSender s = sender;
 
         if (cmd.getName().equalsIgnoreCase("rules")) {
+
+            Player player = (Player) sender;
 
             if (main.getConfig().getBoolean("Do_Rules_Command") == false) {
                 player.sendMessage(ChatColor.DARK_RED + "This command has been disabled");
@@ -43,15 +47,16 @@ public class MiracleSheepEssentialsCommands implements CommandExecutor {
 
             player.sendMessage(ChatColor.GREEN + "Here are the rules:");
             String[] rules = main.getConfig().getStringList("Rules").toArray(new String[0]);
-            for (int i = 0 ; i < rules.length ; i ++) {
+            for (int i = 0; i < rules.length; i++) {
                 player.sendMessage(ChatColor.GOLD + rules[i]);
             }
-
 
 
         }
 
         if (cmd.getName().equalsIgnoreCase("boom")) {
+
+            Player player = (Player) sender;
 
             if (main.getConfig().getBoolean("Do_Boom_Rod") == false) {
                 player.sendMessage(ChatColor.DARK_RED + "This command has been disabled");
@@ -66,23 +71,79 @@ public class MiracleSheepEssentialsCommands implements CommandExecutor {
             player.getInventory().addItem(ItemManager.BoomWand);
 
 
-
         }
 
 
-        if (cmd.getName().equalsIgnoreCase("saveinv")) {
+        if (cmd.getName().equalsIgnoreCase("invsave")) {
+
+
+            if (main.getConfig().getBoolean("Do_SaveLoad_Command") == false) {
+                s.sendMessage(ChatColor.DARK_RED + "This command has been disabled");
+                return true;
+            }
 
             if (!sender.hasPermission("rules.all")) {
-                player.sendMessage(ChatColor.DARK_RED + "You do not have permission to perform this command");
+                s.sendMessage(ChatColor.DARK_RED + "You do not have permission to perform this command");
                 return true;
+            }
+
+            if (args.length < 2) {
+                s.sendMessage(ChatColor.DARK_RED + "Not enough arguments. Use /invsave <invname> <player>");
+                return true;
+            }
+             if (args[1].contains("@a") || args[1].contains("@e")) {
+
+                 s.sendMessage(ChatColor.DARK_RED + "Cannot save all players or entities");
+
+                 return true;
+
+             }
+
+                Entity p =  CommandUtils.getTarget(s, args[1]);
+                UUID h = p.getUniqueId();
+                String hi = h.toString();
+                Player pl = Bukkit.getPlayer(UUID.fromString(hi));;
+
+                main.saveInventory(pl, args[0]);
+
+                if (main.getConfig().getBoolean("Wipe_Upon_Save") == true) {
+                    pl.getInventory().clear();
+                    return true;
+                }
+
+
             }
 
 
 
+            if (cmd.getName().equalsIgnoreCase("invload")) {
+
+                if (main.getConfig().getBoolean("Do_SaveLoad_Command") == false) {
+                    s.sendMessage(ChatColor.DARK_RED + "This command has been disabled");
+                    return true;
+                }
+
+                if (!sender.hasPermission("rules.all")) {
+                    s.sendMessage(ChatColor.DARK_RED + "You do not have permission to perform this command");
+                    return true;
+                }
+
+                if (args.length < 2) {
+                    s.sendMessage(ChatColor.DARK_RED + "Not enough arguments. Use /invsave <invname> <player>");
+                    return true;
+                }
+
+                Entity p =  CommandUtils.getTarget(s, args[1]);
+                UUID h = p.getUniqueId();
+                String hi = h.toString();
+                Player pl = Bukkit.getPlayer(UUID.fromString(hi));;
+
+                pl.getInventory().clear();
+                main.loadInventory(pl, args[0]);
+            }
+
+            return true;
         }
 
 
-
-        return true;
-    }
 }

@@ -1,5 +1,6 @@
 package com.MiracleSheep.MiracleSheepEssentials.Items;
 
+import com.MiracleSheep.MiracleSheepEssentials.MiracleSheepEssentials;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -16,6 +17,16 @@ public class ItemManager {
 
     public static ItemStack BoomWand;
     public static ItemStack Bill;
+    public static MiracleSheepEssentials main;
+
+    public ItemManager (MiracleSheepEssentials miracleSheepEssentials) {
+        this.main = miracleSheepEssentials;
+
+    }
+
+
+
+
     public static void init() {
         createBill();
         createWand();
@@ -42,8 +53,7 @@ public class ItemManager {
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName("§4Hospital Bill");
         List<String> lore = new ArrayList<>();
-        lore.add("§bPlz pay 50000 diamonds");
-        lore.add("§bfor hospital costs");
+        lore.add("§b" + main.getConfig().getString("Hospital_Lore"));
         meta.setLore(lore);
         meta.addEnchant(Enchantment.LUCK,10,true);
         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
