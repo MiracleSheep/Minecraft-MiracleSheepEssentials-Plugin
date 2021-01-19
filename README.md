@@ -14,8 +14,8 @@ It was my first plugin and I am proud of how it turned out. This plugin was hard
 * Gives you a hospital bill upon death, to allow you to keep a record of how many times you have died. This feature can be turned on and off in the config
   * The lore of the hospital bill and death message can be customizable as well
 * Adds a customizable join message shown to the player upon joining, allows this to be turned on or off
-* Allows the plugin announcing itself to be turned on or off
-* Adds a boomrod command, which can be turned on or off
+* Allows the plugin announcing itself to be turned on or off.
+* Adds a boomrod command, which can be turned on or off and is customizable with luckperms.
 * Adds a save inventory feature, which works with target selectors, thanks to a plugin called PseudoCommands.
 * Plus many more small customizable features in the config.
 
