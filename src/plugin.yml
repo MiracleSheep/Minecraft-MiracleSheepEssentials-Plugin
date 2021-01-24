@@ -19,5 +19,10 @@ commands:
   invload:
     description: Loads an inventory
     usage: /<command>
-
+  invsavei:
+    description: Saves your inventory by someone else
+    usage: /<command>
+  invloadi:
+    description: Loads an inventory by someone else
+    usage: /<command>
 

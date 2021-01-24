@@ -6,8 +6,10 @@ import com.MiracleSheep.MiracleSheepEssentials.MiracleSheepEssentials;
 import me.zombie_striker.psudocommands.CommandUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.block.CommandBlock;
-import org.bukkit.command.*;
+import org.bukkit.command.BlockCommandSender;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
@@ -132,7 +134,7 @@ public class MiracleSheepEssentialsCommands implements CommandExecutor {
                     s.sendMessage(ChatColor.DARK_RED + "Not enough arguments. Use /invsave <invname> <player>");
                     return true;
                 }
-
+                try {
                 Entity p =  CommandUtils.getTarget(s, args[1]);
                 UUID h = p.getUniqueId();
                 String hi = h.toString();
@@ -140,10 +142,93 @@ public class MiracleSheepEssentialsCommands implements CommandExecutor {
 
                 pl.getInventory().clear();
                 main.loadInventory(pl, args[0]);
+                } catch (Exception e) {
+                    s.sendMessage(ChatColor.DARK_RED + "There is no inventory saved for this person");
+                }
             }
+
+        if (cmd.getName().equalsIgnoreCase("invloadi")) {
+
+            if (main.getConfig().getBoolean("Do_SaveLoad_Command") == false) {
+                s.sendMessage(ChatColor.DARK_RED + "This command has been disabled");
+                return true;
+            }
+
+            if (!sender.hasPermission("rules.all")) {
+                s.sendMessage(ChatColor.DARK_RED + "You do not have permission to perform this command");
+                return true;
+            }
+
+            if (args.length < 3) {
+                s.sendMessage(ChatColor.DARK_RED + "Not enough arguments. Use /invsave <invname> <player> <player>");
+                return true;
+            }
+            try {
+                Entity p =  CommandUtils.getTarget(s, args[1]);
+                UUID h = p.getUniqueId();
+                String hi = h.toString();
+                Player pl = Bukkit.getPlayer(UUID.fromString(hi));;
+                Player pls = Bukkit.getPlayerExact(args[2]);
+
+                pls.getInventory().clear();
+                main.loadInventoryi(pl, args[0], pls);
+            } catch (Exception e) {
+                s.sendMessage(ChatColor.DARK_RED + "There is no inventory saved for this person");
+            }
+        }
+
+
+        if (cmd.getName().equalsIgnoreCase("invsavei")) {
+
+
+            if (main.getConfig().getBoolean("Do_SaveLoad_Command") == false) {
+                s.sendMessage(ChatColor.DARK_RED + "This command has been disabled");
+                return true;
+            }
+
+            if (!sender.hasPermission("rules.all")) {
+                s.sendMessage(ChatColor.DARK_RED + "You do not have permission to perform this command");
+                return true;
+            }
+
+            if (args.length < 3) {
+                s.sendMessage(ChatColor.DARK_RED + "Not enough arguments. Use /invsave <invname> <player> <player>");
+                return true;
+            }
+            if (args[1].contains("@a") || args[1].contains("@e")) {
+
+                s.sendMessage(ChatColor.DARK_RED + "Cannot save all players or entities");
+
+                return true;
+
+            }
+
+            Entity p =  CommandUtils.getTarget(s, args[1]);
+            UUID h = p.getUniqueId();
+            String hi = h.toString();
+            Player pl = Bukkit.getPlayer(UUID.fromString(hi));
+            Player pls = Bukkit.getPlayerExact(args[2]);;
+
+
+            main.saveInventoryi(pl, args[0], pls);
+
+            if (main.getConfig().getBoolean("Wipe_Upon_Save") == true) {
+                pls.getInventory().clear();
+                return true;
+            }
+
+
+        }
+
+
+
+
 
             return true;
         }
+
+
+
 
 
 }

@@ -2,10 +2,12 @@ package com.MiracleSheep.MiracleSheepEssentials.Events;
 
 import com.MiracleSheep.MiracleSheepEssentials.Items.ItemManager;
 import com.MiracleSheep.MiracleSheepEssentials.MiracleSheepEssentials;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerBedEnterEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 
@@ -40,6 +42,18 @@ public class MiracleSheepEssentialsEvents implements Listener {
         if (main.getConfig().getBoolean("Do_Hospital_Bills") == true) {
             player.sendMessage(ChatColor.AQUA + main.getConfig().getString("Hospital_Death_Message"));
             player.getInventory().addItem(ItemManager.Bill);
+        }
+
+    }
+
+    @EventHandler
+    public static void onPlayerSleep(PlayerBedEnterEvent e) {
+        Player player = e.getPlayer();
+
+
+        if (main.getConfig().getBoolean("Do_Sleep_Skip") == true) {
+            Bukkit.broadcastMessage(ChatColor.GOLD + player.getName() + " has slept.");
+            player.getWorld().setTime(24000);
         }
 
     }

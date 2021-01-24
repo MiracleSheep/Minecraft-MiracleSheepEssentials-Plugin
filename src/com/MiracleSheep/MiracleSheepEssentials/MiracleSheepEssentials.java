@@ -1,12 +1,11 @@
 package com.MiracleSheep.MiracleSheepEssentials;
+
 import com.MiracleSheep.MiracleSheepEssentials.Commands.MiracleSheepEssentialsCommands;
 import com.MiracleSheep.MiracleSheepEssentials.Events.MiracleSheepEssentialsEvents;
 import com.MiracleSheep.MiracleSheepEssentials.Items.ItemManager;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -31,6 +30,8 @@ public class MiracleSheepEssentials extends JavaPlugin {
        getCommand("boom").setExecutor(commands);
         getCommand("invsave").setExecutor(commands);
         getCommand("invload").setExecutor(commands);
+        getCommand("invsavei").setExecutor(commands);
+        getCommand("invloadi").setExecutor(commands);
         getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "[MiracleSheepEssentials] plugin is enabled.");
     }
 
@@ -65,6 +66,31 @@ public class MiracleSheepEssentials extends JavaPlugin {
         player.getInventory().setArmorContents(content);
         content = ((List<ItemStack>) c.get("inventory.content")).toArray(new ItemStack[0]);
         player.getInventory().setContents(content);
+    }
+
+
+    public void saveInventoryi(Player player, String name, Player target) {
+
+
+        File f = new File(this.getDataFolder().getAbsolutePath(), name + player.getName() + ".yml");
+        FileConfiguration c = YamlConfiguration.loadConfiguration(f);
+        c.set("inventory.armor", target.getInventory().getArmorContents());
+        c.set("inventory.content", target.getInventory().getContents());
+        try {
+            c.save(f);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void loadInventoryi(Player player, String name, Player target) {
+
+        File f = new File(this.getDataFolder().getAbsolutePath(), name + player.getName() + ".yml");
+        FileConfiguration c = YamlConfiguration.loadConfiguration(f);
+        ItemStack[] content = ((List<ItemStack>) c.get("inventory.armor")).toArray(new ItemStack[0]);
+        player.getInventory().setArmorContents(content);
+        content = ((List<ItemStack>) c.get("inventory.content")).toArray(new ItemStack[0]);
+        target.getInventory().setContents(content);
     }
 
 

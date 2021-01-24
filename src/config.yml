@@ -1,4 +1,7 @@
 
+# Controls whether or not the sleep plugin will work
+Do_Sleep_Skip: true
+
 # Controls whether or not the boom rod command is enabled
 Do_Boom_Rod: true
 
