@@ -52,8 +52,16 @@ public class MiracleSheepEssentialsEvents implements Listener {
 
 
         if (main.getConfig().getBoolean("Do_Sleep_Skip") == true) {
-            Bukkit.broadcastMessage(ChatColor.GOLD + player.getName() + " has slept.");
-            player.getWorld().setTime(24000);
+
+            if (player.getWorld().getTime() > 12541 && player.getWorld().getTime() < 23458 || player.getWorld().isThundering() == true ) {
+                Bukkit.broadcastMessage(ChatColor.GOLD + player.getName() + " has slept.");
+                player.sendMessage(String.valueOf(player.getWorld().getTime()));
+                player.getWorld().setTime(24000);
+                player.sendMessage(String.valueOf(player.getWorld().getTime()));
+                player.getWorld().setThundering(false);
+                player.getWorld().setWeatherDuration(0);
+                player.getWorld().setStorm(false);
+            }
         }
 
     }

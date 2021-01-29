@@ -84,7 +84,7 @@ public class MiracleSheepEssentialsCommands implements CommandExecutor {
                 return true;
             }
 
-            if (!sender.hasPermission("rules.all")) {
+            if (!sender.hasPermission("inv.all")) {
                 s.sendMessage(ChatColor.DARK_RED + "You do not have permission to perform this command");
                 return true;
             }
@@ -125,7 +125,7 @@ public class MiracleSheepEssentialsCommands implements CommandExecutor {
                     return true;
                 }
 
-                if (!sender.hasPermission("rules.all")) {
+                if (!sender.hasPermission("inv.all")) {
                     s.sendMessage(ChatColor.DARK_RED + "You do not have permission to perform this command");
                     return true;
                 }
@@ -154,7 +154,7 @@ public class MiracleSheepEssentialsCommands implements CommandExecutor {
                 return true;
             }
 
-            if (!sender.hasPermission("rules.all")) {
+            if (!sender.hasPermission("inv.all")) {
                 s.sendMessage(ChatColor.DARK_RED + "You do not have permission to perform this command");
                 return true;
             }
@@ -186,7 +186,7 @@ public class MiracleSheepEssentialsCommands implements CommandExecutor {
                 return true;
             }
 
-            if (!sender.hasPermission("rules.all")) {
+            if (!sender.hasPermission("inv.all")) {
                 s.sendMessage(ChatColor.DARK_RED + "You do not have permission to perform this command");
                 return true;
             }
